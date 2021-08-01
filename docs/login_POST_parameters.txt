@@ -1,0 +1,27 @@
+
+POST    /authentications
+请求参数	JSON
+{
+	"mobile":  ,
+	"code":  ,
+}
+
+响应	JSON
+短信验证码错误 400
+正常   200
+
+{
+	"message": "OK",
+	"data": {
+		"token":"",
+		"refresh_token":""
+		
+			
+	}
+
+}
+
+视图包含注册和登陆两个逻辑
+
+
+

@@ -52,7 +52,7 @@ class AuthorizationResource(Resource):
         """
         生成token 和refresh_token
         :param user_id: 用户id
-        :return: token, refresh_token
+        :return: token, AuthorizationResource
         """
         # 颁发JWT
         secret = current_app.config['JWT_SECRET']
