@@ -1,0 +1,33 @@
+Your identification has been saved in /c/Users/Administrator/.ssh/id_rsa
+Your public key has been saved in /c/Users/Administrator/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:hHqg6lLxuMYtBIs6akMfuVREWxv/+K7iGxCJ020GCy0 chuangye12@icloud.com
+The key's randomart image is:
++---[RSA 3072]----+
+|   .oo o         |
+|   E+oB.+        |
+|   o+*.=..       |
+|. ...++.  o      |
+|.o.++.. S. .     |
+|oo++...   .      |
+|++ooo  .   .     |
+|=o=o.  .. .      |
+|=+..  .oo...     |
++----[SHA256]-----+
+
+
+
+
+ ILoveChina888 /Heimatoutiao 
+ 
+sudo  /usr/bin/redis-server   /etc/redis/redis17000.conf
+sudo  /usr/bin/redis-server   /etc/redis/redis17001.conf
+sudo  /usr/bin/redis-server   /etc/redis/redis17002.conf
+
+sudo  /usr/bin/redis-server  /etc/redis/sentinel_26380.conf --sentinel
+sudo  /usr/bin/redis-server  /etc/redis/sentinel_26381.conf --sentinel
+sudo  /usr/bin/redis-server  /etc/redis/sentinel_26382.conf --sentinel
+
+sudo systemctl enable --now elasticsearch.service
+
+
