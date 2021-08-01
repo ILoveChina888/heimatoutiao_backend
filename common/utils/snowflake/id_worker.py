@@ -41,7 +41,7 @@ class IdWorker(object):
         初始化
         :param datacenter_id: 数据中心（机器区域）ID
         :param worker_id: 机器ID
-        :param sequence: 其实序号
+        :param sequence: 起始序号
         """
         # sanity check
         if worker_id > MAX_WORKER_ID or worker_id < 0:

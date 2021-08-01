@@ -54,20 +54,17 @@ class AuthorizationResource(Resource):
         :param user_id: 用户id
         :return: token, AuthorizationResource
         """
-        # 颁发JWT
+        # 颁发 JWT
         secret = current_app.config['JWT_SECRET']
-        # 生成调用token， refresh_token
-        expiry = datetime.utcnow() + timedelta(hours=current_app.config['JWT_EXPIRY_HOURS'])
-
+        # 生成调用 token, refresh_token
+        expiry = datetime.utcnow() + timedelta(hours= current_app.config['JWT_EXPIRY_HOURS'])
         token = generate_jwt({'user_id': user_id}, expiry, secret)
 
-        if refresh:
-            exipry = datetime.utcnow() + timedelta(days=current_app.config['JWT_REFRESH_DAYS'])
-            refresh_token = generate_jwt({'user_id': user_id, 'is_refresh': True}, exipry, secret)
-        else:
-            refresh_token = None
+        expiry_refresh = datetime.utcnow() + timedelta(days= current_app.config['JWT_REFRESH_DAYS'])
+        refresh_token = generate_jwt({'user_id': user_id, 'is_refresh': True}, expiry_refresh, secret)
 
         return token, refresh_token
+
 
     def post(self):
         """
@@ -80,16 +77,16 @@ class AuthorizationResource(Resource):
         mobile = args.mobile
         code = args.code
 
-        # 从redis中获取验证码
+        # 从redis中获取验证码, 读取, 主从都有
         key = 'app:code:{}'.format(mobile)
         try:
-            real_code = current_app.redis_master.get(key)
+            real_code = current_app.redis_master.get(key)   #先读取主机,验证码
         except ConnectionError as e:
             current_app.logger.error(e)
-            real_code = current_app.redis_slave.get(key)
+            real_code = current_app.redis_slave.get(key)    #再尝试丛机,验证码
 
         try:
-            current_app.redis_master.delete(key)
+            current_app.redis_master.delete(key)    #防止泄露+清缓存, 用完立刻删验证码
         except ConnectionError as e:
             current_app.logger.error(e)
 

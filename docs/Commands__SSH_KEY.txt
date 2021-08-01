@@ -30,4 +30,9 @@ sudo  /usr/bin/redis-server  /etc/redis/sentinel_26382.conf --sentinel
 
 sudo systemctl enable --now elasticsearch.service
 
+/usr/bin/redis-cli --cluster create 192.168.1.108:17000   192.168.1.108:17001  192.168.1.108:17002  192.168.1.108:17003  192.168.1.108:17004  192.168.1.108:17005      --cluster-replicas 1
+
+
+# 以集群的方式连接, 自动 redirect, 仅对官方的 redis-cli 有效
+redis-cli -h 192.168.1.108 -p 17000 -c
 

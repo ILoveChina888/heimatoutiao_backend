@@ -32,6 +32,7 @@ def create_app(config, enable_config_file=False):
     app = create_flask_app(config, enable_config_file)
 
     # 创建Snowflake ID worker
+    # current_app.id_worker, 放进容器里, 全局都能取到
     from utils.snowflake.id_worker import IdWorker
     app.id_worker = IdWorker(app.config['DATACENTER_ID'],
                              app.config['WORKER_ID'],
