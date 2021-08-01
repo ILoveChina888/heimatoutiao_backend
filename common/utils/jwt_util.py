@@ -27,6 +27,7 @@ def verify_jwt(token, secret=None):
     :param secret: 密钥
     :return: dict: payload
     """
+    
     if not secret:
         secret = current_app.config['JWT_SECRET']
 
