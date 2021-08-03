@@ -44,8 +44,8 @@ class AuthorizationResource(Resource):
     认证
     """
     method_decorators = {
-        'post': [set_db_to_write],
-        'put': [set_db_to_read]
+        # 'post': [set_db_to_write],
+        # 'put': [set_db_to_read]
     }
 
     def _generate_tokens(self, user_id, refresh=True):
@@ -57,14 +57,13 @@ class AuthorizationResource(Resource):
         # 颁发 JWT
         secret = current_app.config['JWT_SECRET']
         # 生成调用 token, refresh_token
-        expiry = datetime.utcnow() + timedelta(hours= current_app.config['JWT_EXPIRY_HOURS'])
+        expiry = datetime.utcnow() + timedelta(hours=current_app.config['JWT_EXPIRY_HOURS'])
         token = generate_jwt({'user_id': user_id}, expiry, secret)
 
-        expiry_refresh = datetime.utcnow() + timedelta(days= current_app.config['JWT_REFRESH_DAYS'])
+        expiry_refresh = datetime.utcnow() + timedelta(days=current_app.config['JWT_REFRESH_DAYS'])
         refresh_token = generate_jwt({'user_id': user_id, 'is_refresh': True}, expiry_refresh, secret)
 
         return token, refresh_token
-
 
     def post(self):
         """
@@ -78,19 +77,21 @@ class AuthorizationResource(Resource):
         code = args.code
 
         # 从redis中获取验证码, 读取, 主从都有
-        key = 'app:code:{}'.format(mobile)
+
+        key = 'app:code:{}'.format(mobile).encode('ascii')
         try:
-            real_code = current_app.redis_master.get(key)   #先读取主机,验证码
+            real_code = current_app.redis_master.get(key)  # 先读取主机,验证码
         except ConnectionError as e:
             current_app.logger.error(e)
-            real_code = current_app.redis_slave.get(key)    #再尝试丛机,验证码
+            real_code = current_app.redis_slave.get(key)  # 再尝试丛机,验证码
 
         try:
-            current_app.redis_master.delete(key)    #防止泄露+清缓存, 用完立刻删验证码
+            current_app.redis_master.delete(key)  # 防止泄露+清缓存, 用完立刻删验证码
         except ConnectionError as e:
             current_app.logger.error(e)
 
         if not real_code or real_code.decode() != code:
+            print(real_code)
             return {'message': 'Invalid code.'}, 400
 
         # 查询或保存用户
@@ -133,12 +134,3 @@ class AuthorizationResource(Resource):
             return {'token': token}
         else:
             return {'message': 'Invalid refresh token'}, 403
-
-
-
-
-
-
-
-
-

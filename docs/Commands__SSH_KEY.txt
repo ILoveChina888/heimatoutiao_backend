@@ -20,17 +20,38 @@ The key's randomart image is:
 
  ILoveChina888 /Heimatoutiao 
  
-sudo  /usr/bin/redis-server   /etc/redis/redis17000.conf
-sudo  /usr/bin/redis-server   /etc/redis/redis17001.conf
-sudo  /usr/bin/redis-server   /etc/redis/redis17002.conf
-
-sudo  /usr/bin/redis-server  /etc/redis/sentinel_26380.conf --sentinel
-sudo  /usr/bin/redis-server  /etc/redis/sentinel_26381.conf --sentinel
-sudo  /usr/bin/redis-server  /etc/redis/sentinel_26382.conf --sentinel
-
+ # 启动 ES, 耐心,多试几次
+ 
 sudo systemctl enable --now elasticsearch.service
+ 
+sudo systemctl stop elasticsearch.service
+
+
+ 
+sudo systemctl stop redis
+ 
+ # cd 到redis 目录, 把之前的  nodes-XXX.conf 和 dump 文件删除
+ 
+rm   dump_1700*  nodes-*
+
+sudo  redis-server  ./redis_17000/redis.conf
+sudo  redis-server  ./redis_17001/redis.conf
+sudo  redis-server  ./redis_17002/redis.conf
+sudo  redis-server  ./redis_17003/redis.conf
+sudo  redis-server  ./redis_17004/redis.conf
+sudo  redis-server  ./redis_17005/redis.conf
+sudo  redis-server  ./redis_17006/redis.conf
+sudo  redis-server  ./redis_17007/redis.conf
+
+
+sudo  redis-server  sentinel_config/sentinel_26380.conf --sentinel
+sudo  redis-server  sentinel_26381.conf --sentinel
+sudo  redis-server  sentinel_26382.conf --sentinel
+
 
 /usr/bin/redis-cli --cluster create 192.168.1.108:17000   192.168.1.108:17001  192.168.1.108:17002  192.168.1.108:17003  192.168.1.108:17004  192.168.1.108:17005      --cluster-replicas 1
+
+
 
 
 # 以集群的方式连接, 自动 redirect, 仅对官方的 redis-cli 有效

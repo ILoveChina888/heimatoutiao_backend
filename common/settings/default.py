@@ -41,18 +41,18 @@ class DefaultConfig(object):
     # redis 哨兵
     REDIS_SENTINELS = [
         ('127.0.0.1', '26380'),
-        ('127.0.0.1', '26381'),
-        ('127.0.0.1', '26382'),
+        # ('127.0.0.1', '26381'),
+        # ('127.0.0.1', '26382'),
 
     ]
-    REDIS_SENTINEL_SERVICE_NAME = 'mymaster'
+    REDIS_SENTINEL_SERVICE_NAME = 'myredis'
 
     # redis 集群
     REDIS_CLUSTER = [
                                       # 6379,6380,6381
-        {'host': '127.0.0.1', 'port': '17000'},
-        {'host': '127.0.0.1', 'port': '17001'},
-        {'host': '127.0.0.1', 'port': '17002'},
+        {'host': '192.168.1.108', 'port': '17000'},
+        {'host': '192.168.1.108', 'port': '17001'},
+        {'host': '192.168.1.108', 'port': '17002'},
     ]
 
     # 限流服务redis

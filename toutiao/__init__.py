@@ -57,7 +57,7 @@ def create_app(config, enable_config_file=False):
 
     #from rediscluster import StrictRedisCluster
     from rediscluster import RedisCluster
-    app.redis_cluster = RedisCluster(startup_nodes=app.config['REDIS_CLUSTER'], decode_responses=True)
+    #app.redis_cluster = RedisCluster(startup_nodes=app.config['REDIS_CLUSTER'], decode_responses=True)
 
     #了解到redis5.0
     #修改了方法不支持该StrictRedisCluster方法,
