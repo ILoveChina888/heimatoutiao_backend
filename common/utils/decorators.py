@@ -32,13 +32,10 @@ def set_db_to_write(func):
 def login_required(func):
 
     def wrapper(*args, **kwargs):
-        if g.user_id is not None and g.is_refresh is False:
+        if g.user_id is not None and g.is_refresh == False:
             return func(*args, **kwargs)
         else:
-            return {'message': 'Invalid token'}, 401
+            return {'message': 'Invalid Token'}, 401
 
     return wrapper
-
-
-
 
